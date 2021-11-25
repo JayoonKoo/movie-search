@@ -20,18 +20,13 @@ MovieList.propTypes = {
 }
 
 const Container = styled.section`
-	border-top: 1px solid ;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	top: 20vh;
+	height: 100%;
 `
 
 const MovieListStyled = styled.ul`
 	height: 100%;
-	border: 1px solid;
-	padding: 10px 30px;
+	box-sizing: border-box;
+	margin: 30px;
 `
 
 

@@ -27,11 +27,9 @@ Layout.Top = styled.div`
 	bottom: 75vh;
 	left: 0;
 	right: 0;
-	border: 1px solid;
 `
 
 Layout.Bottom = styled.div`
-	border: 1px solid red;
 	bottom: 0;
 	left: 0;
 	right: 0;
