@@ -17,7 +17,7 @@ const Header = props => {
 // }
 
 const HeaderStyled = styled.header`
-	margin-top: 40px;
+	padding-top: 40px;
 `
 
 const Title = styled.h1`
