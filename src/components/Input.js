@@ -18,7 +18,7 @@ const Input = props => {
 
 const Container = styled.div`
 	width: 100%;
-	height: 400px;
+	height: 200px;
 	padding: 100px;
 	padding-top: 20px;
 `
