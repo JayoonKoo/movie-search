@@ -17,31 +17,20 @@ const Input = props => {
 // }
 
 const Container = styled.div`
-	width: 100%;
-	height: 200px;
-	padding: 100px;
+	padding: 0 30px;
 	padding-top: 20px;
 `
 
 const Form = styled.form`
-	width: 100%;
 `
 
 const InputStyled = styled.input`
 	text-align: center;
-	margin: 0 auto;
-	width: 1000px;
 	display: block;
 	font-size: 20px;
 	padding: 20px;
-
-	@media (max-width: 1220px) {
-		width: 650px;
-	}
-
-	@media (max-width: 768px) {
-		width: 100%;
-	}
+	box-sizing: border-box;
+	width: 100%;
 `
 
 export default Input
