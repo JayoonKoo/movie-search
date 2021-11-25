@@ -20,6 +20,7 @@ const Container = styled.div`
 	width: 100%;
 	height: 400px;
 	padding: 100px;
+	padding-top: 20px;
 `
 
 const Form = styled.form`

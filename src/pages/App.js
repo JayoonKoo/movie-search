@@ -1,3 +1,4 @@
+import Header from "components/Header";
 import Input from "components/Input";
 import Layout from "components/Layout";
 import { createGlobalStyle } from "styled-components";
@@ -17,6 +18,7 @@ function App() {
 		<>
 			<GlobalStyle />
 			<Layout>
+				<Header />
 				<Input />
 			</Layout>
 		</>
