@@ -4,9 +4,29 @@ import styled from 'styled-components'
 import Layout from './Layout'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Movie from './Movie'
+import Error from './Error'
+import Loading from './Loading'
 
 const MovieList = ({movies}) => {
 	const [data, loading, error] = [movies.get('data'), movies.get('loading'), movies.get('error')]
+
+	if (loading) {
+		return <Container>
+			<Layout>
+				<Loading />
+			</Layout>
+		</Container>
+	}
+
+	if (error) {
+		return (
+			<Container>
+				<Layout>
+					<Error title={error} />
+				</Layout>
+			</Container>
+		)
+	}
 
 	return (
 		<Container>
@@ -15,9 +35,8 @@ const MovieList = ({movies}) => {
 					<MovieListStyled>
 						{data.toJS().map(movie => <Movie key={movie.imdbID} movieInfo={movie} />)}
 					</MovieListStyled>
-					: <NoMovieList >
-							<Title>영화를 검색해 보세요.</Title>
-					</NoMovieList>
+					: <Error title="영화를 검색해 보세요">
+					</Error>
 				}
 			</Layout>
 		</Container>
@@ -28,7 +47,7 @@ MovieList.propTypes = {
 	movies: ImmutablePropTypes.mapContains({
 		loading: PropTypes.bool,
 		data: ImmutablePropTypes.list,
-		error: PropTypes.object
+		error: PropTypes.string
 	})
 }
 
@@ -43,21 +62,6 @@ const MovieListStyled = styled.ul`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-`
-
-const NoMovieList = styled.div`
-	height: 400px;
-	width: 100%;
-	position: relative;
-`
-
-const Title = styled.span`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 40px;
-	font-weight: 700;
 `
 
 export default MovieList
