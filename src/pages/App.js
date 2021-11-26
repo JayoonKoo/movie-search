@@ -1,7 +1,7 @@
 import Header from "components/Header";
 import Layout from "components/Layout";
-import MovieList from "components/MovieList";
 import InputContainer from "containers/InputContainer";
+import MovieListContainer from "containers/MovieListContainer";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -25,7 +25,7 @@ function App() {
 			</Layout>
 		</Layout.Top>
 		<Layout.Bottom >
-			<MovieList />
+			<MovieListContainer />
 		</Layout.Bottom>
 		</>
   );
