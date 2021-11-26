@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Layout from './Layout'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import Movie from './Movie'
 
 const MovieList = ({movies}) => {
 	const [data, loading, error] = [movies.get('data'), movies.get('loading'), movies.get('error')]
@@ -11,7 +12,7 @@ const MovieList = ({movies}) => {
 			<Layout >
 				<MovieListStyled>
 					{data && 
-						data.toJS().map(movie => <li key={movie.imdbID}>{movie.Title}</li>)
+						data.toJS().map(movie => <Movie key={movie.imdbID} movieInfo={movie} />)
 					}
 				</MovieListStyled>
 			</Layout>
@@ -35,6 +36,10 @@ const MovieListStyled = styled.ul`
 	height: 100%;
 	box-sizing: border-box;
 	margin: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	border: 1px solid;
 `
 
 
