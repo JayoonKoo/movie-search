@@ -2,13 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Layout from './Layout'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
-const MovieList = props => {
+const MovieList = ({movies}) => {
+	const [data, loading, error] = [movies.get('data'), movies.get('loading'), movies.get('error')]
 	return (
 		<Container>
 			<Layout >
 				<MovieListStyled>
-
+					{data && 
+						data.toJS().map(movie => <li key={movie.imdbID}>{movie.Title}</li>)
+					}
 				</MovieListStyled>
 			</Layout>
 		</Container>
@@ -16,7 +20,11 @@ const MovieList = props => {
 }
 
 MovieList.propTypes = {
-
+	movies: ImmutablePropTypes.mapContains({
+		loading: PropTypes.bool,
+		data: ImmutablePropTypes.list,
+		error: PropTypes.object
+	})
 }
 
 const Container = styled.section`
