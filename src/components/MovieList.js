@@ -7,14 +7,18 @@ import Movie from './Movie'
 
 const MovieList = ({movies}) => {
 	const [data, loading, error] = [movies.get('data'), movies.get('loading'), movies.get('error')]
+
 	return (
 		<Container>
 			<Layout >
-				<MovieListStyled>
-					{data && 
-						data.toJS().map(movie => <Movie key={movie.imdbID} movieInfo={movie} />)
-					}
-				</MovieListStyled>
+				{data ? 
+					<MovieListStyled>
+						{data.toJS().map(movie => <Movie key={movie.imdbID} movieInfo={movie} />)}
+					</MovieListStyled>
+					: <NoMovieList >
+							<Title>영화를 검색해 보세요.</Title>
+					</NoMovieList>
+				}
 			</Layout>
 		</Container>
 	)
@@ -39,9 +43,21 @@ const MovieListStyled = styled.ul`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	border: 1px solid;
 `
 
+const NoMovieList = styled.div`
+	height: 400px;
+	width: 100%;
+	position: relative;
+`
 
+const Title = styled.span`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 40px;
+	font-weight: 700;
+`
 
 export default MovieList
