@@ -40,11 +40,19 @@ const initailState = Map({
 
 const reducer = handleActions(
   {
-    GET_MOVIES_PENDING: (state) => state.setIn(["movies", "loading"], true),
-    GET_MOVIES_SUCCESS: (state, action) =>
-      state.setIn(["movies", "data"], fromJS(action.payload)),
-    GET_MOVIES_FAIL: (state, action) =>
-      state.setIn(["movies", "error"], fromJS(action.payload)),
+    GET_MOVIES_PENDING: (state) => state.setIn(["movies", "loading"], true).setIn(['movies', 'error'], null),
+    GET_MOVIES_SUCCESS: (state, action) => {
+      const data = fromJS(action.payload);
+      if (typeof data === "undefined") {
+        throw new Error("검색 결과가 없습니다.");
+      }
+      const newState = state.setIn(["movies", "loading"], false);
+      return newState.setIn(["movies", "data"], fromJS(action.payload));
+    },
+    GET_MOVIES_FAIL: (state, action) => 
+      state
+        .setIn(["movies", "loading"], false)
+        .setIn(["movies", "error"], fromJS(action.payload))
   },
   initailState,
   { prefix }
@@ -57,10 +65,16 @@ export const getMoviesThunk =
   ({ title, page = 1 }) =>
   async (dispatch, state) => {
     dispatch(getMoviesPending());
-		try {
-			const movies = await MovieService.getMovies({ title, page });
-			dispatch(getMoviesSuccess(movies.Search))
-		} catch (error) {
-			dispatch(getMoviesFail(error))
-		}
+    try {
+      const movies = await MovieService.getMovies({ title, page });
+      dispatch(getMoviesSuccess(movies.Search));
+    } catch (error) {
+			let errorMsg ="" 
+			if (error.response) {
+				errorMsg = error.response.data
+			} else {
+				errorMsg = error.message
+			}
+      dispatch(getMoviesFail(errorMsg));
+    }
   };
