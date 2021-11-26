@@ -24,16 +24,16 @@ const Wrapper = styled.div`
 Layout.Top = styled.div`
 	position: fixed;
 	top: 0;
-	bottom: 75vh;
 	left: 0;
 	right: 0;
+	height: 200px;
+	z-index: 10;
+	background-color: white;
+	border-bottom: 1px solid;
 `
 
 Layout.Bottom = styled.div`
-	bottom: 0;
-	left: 0;
-	right: 0;
-	top: 25vh;
-	position: fixed;
+	margin-top: 200px;
+	min-height: calc(100vh - 200px);
 `
 export default Layout
