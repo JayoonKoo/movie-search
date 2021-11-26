@@ -1,20 +1,28 @@
-import React from 'react'
-// import PropTypes from 'prop-types'
+import React, { useCallback, useRef } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const Input = props => {
+const Input = ({getMovies}) => {
+	const titleRef = useRef(null)
+
+	const handleSubmit = useCallback((e) => {
+		e.preventDefault()
+		const {value: title} = titleRef.current
+		getMovies({title})
+	}, [])
+
 	return (
 		<Container>
-			<Form>
-				<InputStyled placeholder="영화 제목을 입력하세요..."/>
+			<Form onSubmit={handleSubmit}>
+				<InputStyled ref={titleRef} placeholder="영화 제목을 입력하세요..."/>
 			</Form>
 		</Container>
 	)
 }
 
-// Input.propTypes = {
-
-// }
+Input.propTypes = {
+	getMovies: PropTypes.func
+}
 
 const Container = styled.div`
 	padding: 0 30px;
