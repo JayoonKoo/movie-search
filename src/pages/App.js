@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		font-size: 16px;
 		font-family: "Oswald", sans-serif;
+		background-color: #F9B238;
 	}
 	* {
 		box-sizing: border-box;
