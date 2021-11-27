@@ -1,5 +1,5 @@
-import Header from "components/Header";
 import Layout from "components/Layout";
+import HeaderContainer from "containers/HeaderContainer";
 import InputContainer from "containers/InputContainer";
 import MovieListContainer from "containers/MovieListContainer";
 import { createGlobalStyle } from "styled-components";
@@ -20,7 +20,7 @@ function App() {
 		<GlobalStyle />
 		<Layout.Top >
 			<Layout>
-				<Header />
+				<HeaderContainer />
 				<InputContainer />
 			</Layout>
 		</Layout.Top>
