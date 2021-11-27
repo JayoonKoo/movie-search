@@ -1,8 +1,8 @@
 import MovieDetail from 'components/MovieDetail'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMovieThunk } from 'redux/modules/movie'
+import { clearMovie, getMovieThunk } from 'redux/modules/movie'
 
 const MovieDetailContainer = ({backClick, id}) => {
 	const dispatch = useDispatch()
@@ -11,6 +11,10 @@ const MovieDetailContainer = ({backClick, id}) => {
 		dispatch(getMovieThunk({id}))
 	}, [dispatch, id])
 
+	const backClickClear = useCallback(() => {
+		dispatch(clearMovie())
+	}, [dispatch])
+
 	const movieInfo = useSelector(state => ({
 		loading: state.movie.getIn(['movie', 'loading']),
 		data: state.movie.getIn(['movie', 'data']),
@@ -18,7 +22,7 @@ const MovieDetailContainer = ({backClick, id}) => {
 	}))
 
 	return (
-		<MovieDetail backClick={backClick} movieInfo={movieInfo}/>
+		<MovieDetail backClick={backClick} movieInfo={movieInfo} backClickClear={backClickClear}/>
 	)
 }
 

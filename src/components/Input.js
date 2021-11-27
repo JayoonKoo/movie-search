@@ -1,25 +1,30 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Input = ({ getMovies }) => {
-  const titleRef = useRef(null);
+	const [title, setTitle] = useState("")
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      const { value: title } = titleRef.current;
-      getMovies({ title });
+      getMovies({ title});
+			setTitle("")
     },
-    [getMovies]
+    [getMovies, title]
   );
+
+	const handleChnage = useCallback((e) => {
+		const {value} = e.target
+		setTitle(value)
+	}, [])
 
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <InputStyled ref={titleRef} placeholder="Search" />
+        <InputStyled value={title} onChange={handleChnage} placeholder="Search" />
         <InputButton type="submit">
-          <span class="material-icons">search</span>
+          <span className="material-icons">search</span>
         </InputButton>
       </Form>
     </Container>
@@ -35,25 +40,32 @@ const Container = styled.div`
   padding-top: 20px;
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+	position: relative;
+`;
 
 const InputStyled = styled.input`
   display: block;
   font-size: 20px;
-  padding: 20px 40px;
+  padding: 20px 50px;
   box-sizing: border-box;
   width: 100%;
   background-color: #ffffff;
   border: none;
   border-radius: 40px;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
   &:focus {
     outline: none;
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
   }
 `;
 
-const InputButton = styled.button``;
+const InputButton = styled.button`
+	position: absolute;
+	border: none;
+	top: 18px;
+	background-color: #fff;
+	left: 10px;
+	color: #757575;
+	cursor: pointer;
+`;
 
 export default Input;

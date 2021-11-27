@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Layout from './Layout'
@@ -9,9 +9,6 @@ import Loading from './Loading'
 
 const MovieList = ({movies}) => {
 	const [data, loading, error] = [movies.get('data'), movies.get('loading'), movies.get('error')]
-	useEffect(() => {
-		console.log('mounted');
-	}, [])
 
 	if (error) {
 		return (
@@ -33,7 +30,7 @@ const MovieList = ({movies}) => {
 					: <Error title="영화를 검색해 보세요">
 					</Error>
 				}
-				{loading && <Loading />}
+				{loading && <Loading size={50}/>}
 			</Layout>
 		</Container>
 	)

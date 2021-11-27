@@ -52,16 +52,20 @@ const reducer = handleActions(
 				return state
 			}
       if (response === "False") {
+				if(error === "Incorrect IMDb ID.") {
+					throw new Error("영화를 검색하 보세요")
+				}
         throw new Error(error);
       }
       const newState =  state
 				.set('title', title)
 				.set('page', page)
         .setIn(["movies", "loading"], false)
-			
-			if (Number(page) > 1) {
-				return newState.setIn(['movies', 'data'], fromJS([...state.getIn(['movies', 'data']).toJS(), ...movies]))
+			const data = state.getIn(['movies', 'data'])
+			if (Number(page) > 1 && data) {
+				return newState.setIn(['movies', 'data'], fromJS([...data.toJS(), ...movies]))
 			} else {
+				if (page !== "1") return state.setIn(['movies', 'loading'], false)
 				return newState.setIn(["movies", "data"], fromJS(movies));
 			}
     },

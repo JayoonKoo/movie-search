@@ -6,7 +6,7 @@ const Header = ({titleClick}) => {
 	return (
 		<HeaderStyled>
 			<Title onClick={titleClick}>
-				Movie
+				<span>Mo</span>vie
 			</Title>
 		</HeaderStyled>
 	)
@@ -26,7 +26,11 @@ const Title = styled.h1`
 	font-weight: 700;
 	letter-spacing: 1.5px;
 	cursor: pointer;
-	color: #2D2D2D;
+	color: #fff;
+
+	span {
+		color: #83C230;
+	}
 `
 
 export default Header

@@ -15,9 +15,12 @@ Loading.propTypes = {
 }
 
 const Container = styled.div`
-	position: relative;
-	width: 100%;
-	height: 100%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 10;
 `
 const spin = keyframes`
 	from {transform: rotate(0deg);}
@@ -25,7 +28,10 @@ const spin = keyframes`
 `
 
 const LoadingStyled = styled.div`
-	margin: 5% auto;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 	${p=> p.size? css`
 		width: ${p.size}px;
 		height: ${p.size}px;` 
@@ -33,10 +39,10 @@ const LoadingStyled = styled.div`
 		width: 200px;
 		height: 200px; `}
 	border: 10px solid #999;
-	border-right-color: red;
-	border-top-color: red;
+	border-right-color: #83C230;
+	border-top-color: #83C230;
 	border-radius: 50%;
-	animation: ${spin} .2s infinite;
+	animation: ${spin} .8s infinite;
 `
 
 

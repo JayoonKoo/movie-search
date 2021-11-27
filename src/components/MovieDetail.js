@@ -4,19 +4,13 @@ import styled from "styled-components";
 import Loading from "./Loading";
 import Error from "./Error";
 
-const MovieDetail = ({ backClick, movieInfo }) => {
+const MovieDetail = ({ backClick, movieInfo , backClickClear}) => {
   const { loading, data, error } = movieInfo;
   const movieData = {};
-  const imgArr = [
-    "IMDB.png",
-    "RottenTomatoes.png",
-    "Metacritic.png",
-  ];
   if (data) {
-    const { Title, Runtime, Ratings, Poster, Plot } = data.toJS();
+    const { Title, Runtime,  Poster, Plot } = data.toJS();
     movieData.Title = Title;
     movieData.Runtime = Runtime;
-    movieData.Ratings = Ratings;
     movieData.Poster = Poster;
     movieData.Plot = Plot;
   }
@@ -25,10 +19,11 @@ const MovieDetail = ({ backClick, movieInfo }) => {
     (e) => {
       const { target, currentTarget } = e;
       if (target === currentTarget) {
+				backClickClear();
         backClick();
       }
     },
-    [backClick]
+    [backClick, backClickClear]
   );
 
   if (error) {
@@ -36,7 +31,7 @@ const MovieDetail = ({ backClick, movieInfo }) => {
   }
 
   if (loading) {
-    return <Loading />;
+    return <Loading size={100} />;
   }
 
   return (
@@ -48,12 +43,6 @@ const MovieDetail = ({ backClick, movieInfo }) => {
             <DescriptContainer>
               <TitleStyled>{movieData.Title}</TitleStyled>
               <RuntimeStyled>RunTime : {movieData.Runtime}</RuntimeStyled>
-              {movieData.Ratings.map((RatingItem, i) => (
-                <>
-                  <Source key={imgArr[i]} src={imgArr[i]}/>
-                  <Rating key={RatingItem.Value}>{RatingItem.Value}</Rating>
-                </>
-              ))}
               <Description>{movieData.Plot}</Description>
             </DescriptContainer>
           </Inner>
@@ -66,6 +55,7 @@ const MovieDetail = ({ backClick, movieInfo }) => {
 MovieDetail.propTypes = {
   backClick: PropTypes.func,
   movieInfo: PropTypes.object,
+	backClickClear: PropTypes.func,
 };
 
 const Background = styled.div`
@@ -75,7 +65,7 @@ const Background = styled.div`
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const Inner = styled.div`
@@ -90,13 +80,17 @@ const Inner = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 30px;
+	border-radius: 10px;
 
   @media (max-width: 1200px) {
-    width: 700px;
+    width: 800px;
+		height: 600px;
   }
 
   @media (max-width: 768px) {
     width: 400px;
+		flex-direction: column;
+		height: 900px;
   }
 `;
 
@@ -105,30 +99,29 @@ const PosterStyled = styled.div`
   background-size: cover;
   width: 420px;
   height: ${(420 * 3) / 2}px;
+	border-radius: 10px;
+
+	@media (max-width: 1200px) {
+		width: 350px;
+		height: ${350 * 3 / 2}px;
+	}
 `;
 
 const DescriptContainer = styled.div`
   height: 100%;
   width: 400px;
   box-sizing: border-box;
+	overflow: hidden;
+	padding: 30px 20px;
+
+	@media (max-width: 768px) {
+		height: 50%;
+	}
 `;
 
 const TitleStyled = styled.h4`
   font-size: 40px;
   margin-bottom: 20px;
-`;
-
-const Source = styled.img`
-	display: inline-block;
-	width: 35px;
-	height: 25px;
-`;
-
-const Rating = styled.span`
-	vertical-align: 5px;
-	margin-left: 5px;
-	margin-right: 14px;
-	font-size: 14px;
 `;
 
 
