@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const Header = props => {
@@ -12,9 +12,9 @@ const Header = props => {
 	)
 }
 
-// Header.propTypes = {
-
-// }
+Header.propTypes = {
+	titleClick: PropTypes.func
+}
 
 const HeaderStyled = styled.header`
 	padding-top: 40px;
