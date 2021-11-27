@@ -26,6 +26,7 @@ const Title = styled.h1`
 	font-weight: 700;
 	letter-spacing: 1.5px;
 	cursor: pointer;
+	color: #2D2D2D;
 `
 
 export default Header

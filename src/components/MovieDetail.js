@@ -50,8 +50,8 @@ const MovieDetail = ({ backClick, movieInfo }) => {
               <RuntimeStyled>RunTime : {movieData.Runtime}</RuntimeStyled>
               {movieData.Ratings.map((RatingItem, i) => (
                 <>
-                  <Source src={imgArr[i]}/>
-                  <Rating>{RatingItem.Value}</Rating>
+                  <Source key={imgArr[i]} src={imgArr[i]}/>
+                  <Rating key={RatingItem.Value}>{RatingItem.Value}</Rating>
                 </>
               ))}
               <Description>{movieData.Plot}</Description>

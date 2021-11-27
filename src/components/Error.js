@@ -29,5 +29,6 @@ const Title = styled.span`
 	transform: translate(-50%, -50%);
 	font-size: 40px;
 	font-weight: 700;
+	color: #F6E7EF;
 `
 export default Error

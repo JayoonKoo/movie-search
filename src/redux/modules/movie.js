@@ -25,9 +25,11 @@ const {
   { prefix }
 );
 
-export {clearMovie, clearMovies}
+export { clearMovie, clearMovies };
 
 const initailState = Map({
+	title: "",
+  page: 0,
   movies: Map({
     loading: false,
     data: null,
@@ -45,12 +47,23 @@ const reducer = handleActions(
     GET_MOVIES_PENDING: (state) =>
       state.setIn(["movies", "loading"], true).setIn(["movies", "error"], null),
     GET_MOVIES_SUCCESS: (state, action) => {
-      const data = fromJS(action.payload);
-      if (typeof data === "undefined") {
-        throw new Error("검색 결과가 없습니다.");
+      const { response, movies, page, error, title } = action.payload;
+			if (state.get('page') === page) {
+				return state
+			}
+      if (response === "False") {
+        throw new Error(error);
       }
-      const newState = state.setIn(["movies", "loading"], false);
-      return newState.setIn(["movies", "data"], fromJS(action.payload));
+      const newState =  state
+				.set('title', title)
+				.set('page', page)
+        .setIn(["movies", "loading"], false)
+			
+			if (Number(page) > 1) {
+				return newState.setIn(['movies', 'data'], fromJS([...state.getIn(['movies', 'data']).toJS(), ...movies]))
+			} else {
+				return newState.setIn(["movies", "data"], fromJS(movies));
+			}
     },
     GET_MOVIES_FAIL: (state, action) =>
       state
@@ -66,8 +79,8 @@ const reducer = handleActions(
       state
         .setIn(["movie", "loading"], false)
         .setIn(["movie", "error"], fromJS(action.payload)),
-		CLEAR_MOVIES: (state) => state.setIn(['movies', 'data'], null),
-		CLEAR_MOVIE: (state) => state.setIn(['movie', 'data'], null),
+    CLEAR_MOVIES: (state) => state.setIn(["movies", "data"], null).set('title', "").set('page', 0),
+    CLEAR_MOVIE: (state) => state.setIn(["movie", "data"], null),
   },
   initailState,
   { prefix }
@@ -77,12 +90,20 @@ export default reducer;
 
 // thunk
 export const getMoviesThunk =
-  ({ title, page = 1 }) =>
+  ({ title, page }) =>
   async (dispatch) => {
     dispatch(getMoviesPending());
     try {
       const movies = await MovieService.getMovies({ title, page });
-      dispatch(getMoviesSuccess(movies.Search));
+      dispatch(
+        getMoviesSuccess({
+          movies: movies.Search,
+          response: movies.Response,
+          page,
+          error: movies.Error,
+					title,
+        })
+      );
     } catch (error) {
       let errorMsg = "";
       if (error.response) {
@@ -94,12 +115,14 @@ export const getMoviesThunk =
     }
   };
 
-export const getMovieThunk = ({ id }) => async (dispatch) => {
-	dispatch(getMoviePending()) 
-	try {
-		const movie = await MovieService.getMovieDetail({id})
-		dispatch(getMovieSuccess(movie))
-	} catch (error) {
-		dispatch(getMovieFail(error.response.data))
-	}
-};
+export const getMovieThunk =
+  ({ id }) =>
+  async (dispatch) => {
+    dispatch(getMoviePending());
+    try {
+      const movie = await MovieService.getMovieDetail({ id });
+      dispatch(getMovieSuccess(movie));
+    } catch (error) {
+      dispatch(getMovieFail(error.response.data));
+    }
+  };

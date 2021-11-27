@@ -28,12 +28,13 @@ Layout.Top = styled.div`
 	right: 0;
 	height: 200px;
 	z-index: 10;
-	background-color: white;
+	background-color: #FAFAFA;
 	border-bottom: 1px solid;
 `
 
 Layout.Bottom = styled.div`
 	margin-top: 200px;
 	min-height: calc(100vh - 200px);
+	background-color: #FAFAFA;
 `
 export default Layout
