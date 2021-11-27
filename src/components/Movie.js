@@ -12,7 +12,7 @@ const Movie = ({ movieInfo }) => {
 
   return (
     <>
-      <Container onClick={togleMovieDetail} Poster={Poster}>
+      <Container onClick={togleMovieDetail} Poster={Poster === "N/A" ? "noposter.png" : Poster}>
         <MovieTitle>{Title}</MovieTitle>
       </Container>
       {visible && (
@@ -30,6 +30,7 @@ Movie.propTypes = {
 };
 
 const Container = styled.div`
+	border-radius: 10px;
   width: 200px;
   height: ${(200 * 3) / 2}px;
   margin: 10px;
@@ -38,8 +39,15 @@ const Container = styled.div`
   background-image: ${(p) => (p.Poster ? `url(${p.Poster})` : "")};
   position: relative;
   cursor: pointer;
-  &:hover {
-    border: 6px solid;
+	box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
+  &:hover::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+    border: 6px solid #83C230;
   }
 `;
 
