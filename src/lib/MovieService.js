@@ -11,4 +11,13 @@ export default class MovieService {
 		})
 		return response.data
 	}
+
+	static getMovieDetail = async({id}) => {
+		const response = await axios({
+			url: `https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full`,
+			method: 'GET'
+		})
+
+		return response.data
+	}
 }
