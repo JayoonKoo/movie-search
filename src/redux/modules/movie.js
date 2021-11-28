@@ -108,14 +108,8 @@ export const getMoviesThunk =
 					title,
         })
       );
-    } catch (error) {
-      let errorMsg = "";
-      if (error.response) {
-        errorMsg = error.response.data;
-      } else {
-        errorMsg = error.message;
-      }
-      dispatch(getMoviesFail(errorMsg));
+    } catch (e) {
+      dispatch(getMoviesFail(e.response.data));
     }
   };
 
@@ -126,7 +120,7 @@ export const getMovieThunk =
     try {
       const movie = await MovieService.getMovieDetail({ id });
       dispatch(getMovieSuccess(movie));
-    } catch (error) {
-      dispatch(getMovieFail(error.response.data));
+    } catch (e) {
+      dispatch(getMovieFail(e.response.data));
     }
   };
