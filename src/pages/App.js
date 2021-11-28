@@ -1,7 +1,34 @@
+import Layout from "components/Layout";
+import HeaderContainer from "containers/HeaderContainer";
+import InputContainer from "containers/InputContainer";
+import MovieListContainer from "containers/MovieListContainer";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+	body {
+		font-size: 16px;
+		font-family: "Oswald", sans-serif;
+		background-color: #F9B238;
+	}
+	* {
+		box-sizing: border-box;
+	}
+`;
 
 function App() {
   return (
-		<h1>Movie</h1>
+		<>
+		<GlobalStyle />
+		<Layout.Top >
+			<Layout>
+				<HeaderContainer />
+				<InputContainer />
+			</Layout>
+		</Layout.Top>
+		<Layout.Bottom >
+			<MovieListContainer />
+		</Layout.Bottom>
+		</>
   );
 }
 
